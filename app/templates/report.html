@@ -1,0 +1,26 @@
+{% if check_result %}
+    <ul class="list-group m-0">
+        {% for issue in check_result %}
+            <li class="list-group-item m-0 p-0">
+                <div class="alert
+                                    {% if issue.type == 'error' %}
+                                        alert-danger
+                                    {% elif issue.type == 'warning' %}
+                                        alert-warning
+                                    {% elif issue.type == 'convention' %}
+                                        alert-info
+                                    {% else %}
+                                        alert-secondary
+                                    {% endif %}
+                                    mb-2" role="alert">
+                    <strong>Object:</strong> {{ issue.obj }}<br>
+                    <strong>Line:</strong> {{ issue.line }}<br>
+                    <strong>Column:</strong> {{ issue.column }}<br>
+                    <strong>Message:</strong> {{ issue.message }}<br>
+                </div>
+            </li>
+        {% endfor %}
+    </ul>
+{% else %}
+    <div>No report</div>
+{% endif %}

@@ -1,0 +1,94 @@
+{% extends 'main.html' %}
+
+{% block title %}
+    LK
+{% endblock %}
+
+{% block content %}
+    <div class="container">
+        {% if user_file %}
+            <div class="card mb-4">
+                <div class="card-header">
+                    Your Uploaded File
+                </div>
+                <div class="card-body">
+                    <p class="card-text"><strong>Filename:</strong> {{ user_file.filename }}</p>
+                    <p class="card-text"><strong>Status:</strong> {{ user_file.status }}</p>
+                    <strong>Result:</strong>
+                    {% if check_result %}
+                        {% include 'report.html' %}
+                    {% endif %}
+
+                    <form action="{{ url_for('delete_file') }}" method="get">
+                        <button class="btn btn-danger" type="submit">Delete File</button>
+                    </form>
+                </div>
+            </div>
+        {% else %}
+            <div class="alert alert-info mb-4">
+                No uploaded file yet.
+            </div>
+        {% endif %}
+
+        <div class="card mb-4">
+            <div class="card-header">
+                {% if user_file %}
+                    Replace File
+                {% else %}
+                    Upload New File
+                {% endif %}
+            </div>
+            <div class="card-body">
+                <form action="
+
+
+
+
+                        {% if user_file %}{{ url_for('replace_file') }}{% else %}{{ url_for('upload_file') }}{% endif %}"
+                      method="post" enctype="multipart/form-data">
+                    <input class="form-control" type="file" name="file">
+                    {% if not user_file %}
+                        <button class="btn btn-primary mt-2" type="submit">Upload</button>
+                    {% endif %}
+                    {% if user_file %}
+                        <button class="btn btn-warning mt-2" type="submit">Replace</button>
+                    {% endif %}
+                </form>
+            </div>
+        </div>
+
+
+        <div class="card mb-4">
+            <div class="card-header">
+                Check history
+            </div>
+            <div class="card-body">
+                <table class="table">
+                    <thead>
+                    <tr>
+                        <th>Filename</th>
+                        <th>Status</th>
+                        <th>Details</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    {% for file in user_files %}
+                        <tr>
+                            <td>{{ file.filename }}</td>
+                            <td>{{ file.status }}</td>
+                            <td>
+                                <button class="btn btn-link" data-toggle="collapse" data-target="#report-{{ file.id }}">
+                                    Show Report
+                                </button>
+                                <div id="report-{{ file.id }}" class="collapse show">
+                                </div>
+                            </td>
+                        </tr>
+                    {% endfor %}
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+    <script src="static/scripts.js"></script>
+{% endblock %}
