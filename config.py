@@ -1,6 +1,5 @@
 import os
 import secrets
-from kombu import Exchange, Queue
 
 basedir = os.path.abspath(os.path.dirname(__file__))
 
@@ -24,7 +23,7 @@ class Config:
     SQLALCHEMY_TRACK_MODIFICATIONS = False
     PROPAGATE_EXCEPTIONS = True
 
-    # specify mail server
+    # mail server
     MAIL_SERVER = 'smtp.rambler.ru'
     MAIL_PORT = 587
     MAIL_USE_TLS = True
